@@ -1,0 +1,10 @@
+<!DOCTYPE html> <!-- HTML5 도큐먼트 선언  -->
+<html>
+<head>
+    <title>Item Details</title>
+</head>
+<body>
+    <h1>이미지에 대한 URL : {{ url_for('static', path=imgname) }}</h1>
+    <img src="{{ url_for('static', path=imgname) }}">    
+</body>
+</html>

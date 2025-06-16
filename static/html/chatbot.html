@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <style>
+      @font-face {
+        font-family: 'ONE-Mobile-POP';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      * {
+        font-family: 'ONE-Mobile-POP'
+      }
+      input {
+        margin-bottom: 5px;
+      }
+      h1 {
+        color :forestgreen;
+        text-shadow: 3px 3px 5px yellow;
+      }
+      hr {
+        height: 5px;
+        background-image: linear-gradient(to right, red, orange, yellow, lime);
+      }
+      img {
+        width:30px;
+      }      
+    </style>
+  </head>
+  <body>
+    <h1>유니코의 RAG 챗봇 <img src="../images/clover.png"></h1>
+    <hr>
+    <input id="chatinput" type="text" size="65">
+    <button id="query" onclick="proc();">전송</button><br>   
+    <textarea id="chatoutput" cols="70" rows="10"></textarea>
+    <script>
+      function proc() {
+        const inputDom = document.querySelector("#chatinput");
+        const outputDom = document.getElementById("chatoutput");
+
+        const request= new XMLHttpRequest();
+        request.onload = function() {          
+          outputDom.value = "["+inputDom.value +"]에 대한 응답된 내용입니다.";
+          console.log(request.responseText);
+          outputDom.value += JSON.parse(request.responseText).message[0].generated_text;
+        }
+        request.open("GET", "http://localhost:8001/rag?query="+inputDom.value);
+        request.send();        
+      }
+    </script>
+  </body>
+</html>
